@@ -46,15 +46,17 @@ export const login = catchAsyncErrors(async (req, res, next) => {
 
 export const logout = catchAsyncErrors(async (req, res, next) => {
   res
-    .status(201)
-    .cookie("token", "", {
+    .status(200)
+    .clearCookie("token", {
       httpOnly: true,
-      expires: new Date(Date.now()),
+      secure: true, // make sure it's HTTPS on Netlify/Render
+      sameSite: "None", // allow cross-site
     })
     .json({
       success: true,
       message: "Logged Out Successfully.",
     });
+
 });
 
 
